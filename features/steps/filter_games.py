@@ -27,6 +27,9 @@ def step_impl(context, name):
 def step_impl(context, rating):
 	context.rating = rating
 
+@given('the user enters a studio: {studio}')
+def step_impl(context, studio):
+	context.studio = studio
 
 @when("the user search games by {criteria}")
 def step_impl(context, criteria):
@@ -44,6 +47,11 @@ def step_impl(context, criteria):
 			context.message = error
 		else:
 			context.error = error
+	elif(criteria == 'studio'):
+		result, message = get_game_developer(context.games, context.studio)
+		print(result)
+		context.result = result
+		context.message = message
 
 
 @then("{total} games will match")
@@ -68,3 +76,6 @@ def step_impl(context, message):
 	print(message)
 	print(context.message)
 	assert context.message == message
+
+
+
